@@ -8,6 +8,7 @@ import com.androiddevs.shoppinglisttestingyt.data.remote.PixabayAPI
 import com.androiddevs.shoppinglisttestingyt.other.Constants.BASE_URL
 import com.androiddevs.shoppinglisttestingyt.other.Constants.DATABASE_NAME
 import com.androiddevs.shoppinglisttestingyt.repositories.DefaultShoppingRepository
+import com.androiddevs.shoppinglisttestingyt.repositories.ShoppingRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +36,7 @@ object AppModule {
     @Provides
     fun provideDefaultShoppingRepository(
         dao: ShoppingDao, api: PixabayAPI
-    ) = DefaultShoppingRepository(dao, api)
+    ) = DefaultShoppingRepository(dao, api) as ShoppingRepository
 
     @Singleton
     @Provides
