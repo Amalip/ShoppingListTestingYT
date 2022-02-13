@@ -1,7 +1,6 @@
 package com.androiddevs.shoppinglisttestingyt.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
@@ -56,14 +55,24 @@ class ImagePickFragmentTest {
         }
 
         onView(withId(R.id.rvImages)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<ImageAdapter.ImageViewHolder>(
-                0,
-                click()
-            )
+            RecyclerViewActions
+                .actionOnItemAtPosition<ImageAdapter.ImageViewHolder>(0, click())
         )
 
         verify(navController).popBackStack()
         assertThat(testViewModel.curImageUrl.getOrAwaitValue()).isEqualTo(imageUrl)
+
+        /**
+         * We need to remove animations in test because Espresso get problems because them so that makes
+         * flaky tests
+         *
+         * To remove them we need to do this in Terminal
+         * 1- adb shell settings put global window_animation_scale 0
+         * 2- adb shell settings put global transition_animation_scale 0
+         * 3- adb shell settings put global animator_duration_scale 0
+         *
+         */
+
     }
 
 }
